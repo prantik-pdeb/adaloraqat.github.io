@@ -293,7 +293,7 @@
             <div class="links">
                 <a href="#" class="link-btn">📄 Paper</a>
                 <a href="#" class="link-btn">💻 Code</a>
-                <a href="#demo" class="link-btn">🚀 Demo</a>
+                <a href="#demo" class="link-btn"> 🤗Demo</a>
             </div>
         </div>
     </header>
@@ -303,8 +303,7 @@
         <div class="section">
             <h2>Abstract</h2>
             <p class="abstract">
-                Chest X-ray segmentation is crucial for computer-aided diagnosis of lung diseases like pneumonia, tuberculosis, and COVID-19. While large foundation models show promise, they're too heavy for typical hospital computers. We present AdaLoRA-QAT, a practical two-stage approach that makes these models smaller and faster without losing accuracy. Our method uses adaptive low-rank adaptation to focus computational resources where they matter most, combined with 8-bit quantization that maintains the fine details doctors need. Testing on 64,590 chest X-rays, AdaLoRA-QAT achieves 95.63% accuracy while using 17 times fewer parameters than standard approaches. This makes it practical for real clinical settings with limited computing power.
-            </p>
+                Chest X-ray (CXR) segmentation is an important step for computer-aided diagnosis, and though large vision foundation models exhibit strong generalization, they are computationally challenging to deploy in resource constrained clinical settings. We propose AdaLoRA–QAT, a two-stage fine-tuning framework that couples adaptive low-rank encoder adaptation with quantization-aware decoder optimization. Adaptive rank allocation improves parameter efficiency for clinical deployment, while 8-bit quantization preserves structural fidelity for clinical trustability. Across large-scale CXR datasets, AdaLoRA–QAT attains state-of-the-art fine-tuning accuracy (95.63% Dice) with a 17x reduction in trainable parameters and lower memory cost, thereby outperforming recent competing methods. AdaLoRA–QAT bridges the trade-off between accuracy and efficiency while preserving structural alignment, enabling compact, clinically deployable foundation models for medical image segmentation.
 
         <div class="section" id="demo">
             <h2>Try It Yourself</h2>
