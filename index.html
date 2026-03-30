@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ADALORA-QAT: ADAPTIVE LOW RANK AND QUANTIZATION AWARE SEGMENTATION">
+    <meta name="description" content="ADALORA-QAT: Adaptive Low-Rank and Quantization-Aware Training for Medical Image Segmentation">
     <title>AdaLoRA-QAT: Adaptive Low-Rank and Quantization-Aware Training for Chest X-Ray Segmentation</title>
     <style>
         * {
@@ -31,6 +31,20 @@
             padding: 60px 30px 50px;
             margin-bottom: 50px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .venue-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.82em;
+            font-weight: 500;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 0.03em;
         }
 
         h1 {
@@ -73,7 +87,9 @@
             border-radius: 3px;
             font-size: 0.9em;
             font-family: 'Segoe UI', sans-serif;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             border: 1px solid rgba(255,255,255,0.2);
             transition: all 0.2s ease;
             font-weight: 500;
@@ -111,37 +127,172 @@
             hyphens: auto;
         }
 
+        /* Results table */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 10px;
+        }
+
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95em;
+        }
+
+        .metrics-table th {
+            background: #f0f5fa;
+            color: #1a5490;
+            font-weight: 600;
+            padding: 10px 16px;
+            text-align: left;
+            border: 1px solid #d5dde5;
+        }
+
+        .metrics-table td {
+            padding: 9px 16px;
+            border: 1px solid #e5e5e5;
+            color: #2a2a2a;
+        }
+
+        .metrics-table tr:nth-child(even) td {
+            background: #f9fbfc;
+        }
+
+        .efficiency-cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .eff-card {
+            flex: 1;
+            min-width: 140px;
+            background: #f0f5fa;
+            border: 1px solid #c8d8e8;
+            border-radius: 4px;
+            padding: 18px 20px;
+            text-align: center;
+        }
+
+        .eff-card .number {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+            color: #1a5490;
+            line-height: 1.1;
+        }
+
+        .eff-card .label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.82em;
+            color: #555;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        /* Architecture */
+        .arch-stages {
+            display: flex;
+            gap: 0;
+            margin: 20px 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .arch-stage {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #d5dde5;
+        }
+
+        .arch-stage:first-child {
+            border-right: none;
+            background: #f5f8fa;
+        }
+
+        .arch-stage:last-child {
+            background: #f0f5fa;
+        }
+
+        .arch-stage .stage-title {
+            font-weight: 600;
+            color: #1a5490;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .arch-stage ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .arch-stage ul li {
+            font-size: 0.88em;
+            color: #444;
+            padding: 3px 0;
+            padding-left: 14px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .arch-stage ul li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: #1a5490;
+            font-weight: bold;
+        }
+
+        /* Quick start */
+        .code-block {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 20px 24px;
+            border-radius: 4px;
+            font-family: 'Courier New', 'Consolas', monospace;
+            font-size: 0.875em;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .code-block .comment { color: #6c7086; }
+        .code-block .cmd { color: #89dceb; }
+
+        /* Demo */
         .demo-container {
             background: #f5f8fa;
             border: 1px solid #d5dde5;
             border-radius: 4px;
-            padding: 32px;
-            margin: 30px 0;
+            padding: 28px 32px;
         }
 
         .demo-container h3 {
             font-family: 'Segoe UI', sans-serif;
             color: #1a5490;
-            margin-bottom: 16px;
-            font-size: 1.25em;
-            font-weight: 400;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            font-weight: 500;
         }
 
         .demo-container p {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             line-height: 1.65;
-            font-size: 0.98em;
+            font-size: 0.97em;
+            color: #333;
         }
 
         .demo-btn {
             display: inline-block;
-            padding: 11px 28px;
+            padding: 10px 26px;
             background: #ff9500;
             color: white;
             text-decoration: none;
             border-radius: 3px;
             font-weight: 500;
-            font-size: 0.95em;
+            font-size: 0.93em;
             font-family: 'Segoe UI', sans-serif;
             transition: background 0.2s ease;
         }
@@ -150,10 +301,16 @@
             background: #e68600;
         }
 
+        .demo-btn.disabled {
+            background: #aaa;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         .note-text {
-            margin-top: 16px;
-            font-size: 0.88em;
-            color: #666;
+            margin-top: 14px;
+            font-size: 0.86em;
+            color: #777;
             font-style: italic;
             line-height: 1.5;
         }
@@ -169,76 +326,69 @@
         }
 
         footer p {
-            margin: 10px 0;
+            margin: 8px 0;
             line-height: 1.6;
         }
 
+        footer a {
+            color: #1a5490;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
         .footer-copyright {
-            margin-top: 18px;
-            font-size: 0.88em;
-            color: #888;
+            margin-top: 16px;
+            font-size: 0.86em;
+            color: #999;
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.5em;
-            }
-
-            .section {
-                padding: 25px 20px;
-            }
-
-            header {
-                padding: 40px 20px 35px;
-            }
+            h1 { font-size: 1.45em; }
+            .section { padding: 22px 18px; }
+            header { padding: 35px 18px 30px; }
+            .results-grid { grid-template-columns: 1fr; }
+            .arch-stages { flex-direction: column; }
+            .arch-stage:first-child { border-right: 1px solid #d5dde5; border-bottom: none; }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>ADALORA-QAT: ADAPTIVE LOW RANK AND QUANTIZATION AWARE SEGMENTATION</h1>
-            
+            <div class="venue-badge">📄 IEEE ISBI 2025 · Accepted (Oral Presentation)</div>
+            <h1>ADALORA-QAT: Adaptive Low-Rank and Quantization-Aware Training for Chest X-Ray Segmentation</h1>
+
             <div class="authors">
-                Prantik Deb*, Srimanth Dhondy*, N. Ramakrishna†, Anu Kapoor†, Raju S. Bapi*, Tapabrata Chakraborti‡
+                Prantik Deb* · Srimanth Dhondy* · N. Ramakrishna† · Anu Kapoor† · Raju S. Bapi* · Tapabrata Chakraborti‡
             </div>
-            
+
             <div class="affiliations">
-                *International Institute of Information Technology, Hyderabad, India<br>
+                *International Institute of Information Technology, Hyderabad, India &nbsp;·&nbsp;
                 †Nizam's Institute of Medical Sciences, Hyderabad, India<br>
-                ‡The Alan Turing Institute, London and University College London, United Kingdom
+                ‡The Alan Turing Institute, London &amp; University College London, United Kingdom
             </div>
-            
+
             <div class="links">
-                <a href="#" class="link-btn">arXiv</a>
-                <a href="https://github.com/prantik-pdeb/ADALORA-QAT" class="link-btn" target="_blank">Code</a>
-                <a href="#demo" class="link-btn">🤗 Demo</a>
+                <a href="#" class="link-btn"> arXiv</a>
+                <a href="https://github.com/prantik-pdeb/ADALORA-QAT" class="link-btn" target="_blank">Github</a>
             </div>
         </div>
     </header>
 
     <div class="container">
-        
+
         <div class="section">
             <h2>Abstract</h2>
             <p class="abstract">
-                Chest X-ray (CXR) segmentation is an important step for computer-aided diagnosis, and though large vision foundation models exhibit strong generalization, they are computationally challenging to deploy in resource-constrained clinical settings. We propose AdaLoRA-QAT, a two-stage fine-tuning framework that couples adaptive low-rank encoder adaptation with full model quantization-aware training. Adaptive rank allocation improves parameter efficiency for clinical deployment, while selective mixed-precision 8bit quantization preserves structural fidelity for clinical trustability. Across large-scale CXR datasets, AdaLoRA-QAT attains state-of-the-art fine-tuning accuracy (95.6% Dice) with a 16.6x reduction in trainable parameters and 2.24x model compression, thereby outperforming recent competing methods. AdaLoRA-QAT bridges the trade-off between accuracy and efficiency while preserving structural alignment, enabling compact, clinically deployable foundation models for medical image segmentation.
+                Chest X-ray (CXR) segmentation is an important step for computer-aided diagnosis, and though large vision foundation models exhibit strong generalization, they are computationally challenging to deploy in resource-constrained clinical settings. We propose AdaLoRA-QAT, a two-stage fine-tuning framework that couples adaptive low-rank encoder adaptation with full model quantization-aware training. Adaptive rank allocation improves parameter efficiency for clinical deployment, while selective mixed-precision 8-bit quantization preserves structural fidelity for clinical trustability. Across large-scale CXR datasets, AdaLoRA-QAT attains state-of-the-art fine-tuning accuracy (95.6% Dice) with a 16.6× reduction in trainable parameters and 2.24× model compression, thereby outperforming recent competing methods. AdaLoRA-QAT bridges the trade-off between accuracy and efficiency while preserving structural alignment, enabling compact, clinically deployable foundation models for medical image segmentation.
             </p>
         </div>
 
-        <div class="section" id="demo">
-            <h2>Interactive Demo</h2>
-            <div class="demo-container">
-                <h3>🤗 Hugging Face Space</h3>
-                <p>
-                    Upload chest X-ray images to visualize automated lung segmentation using our parameter-efficient model. The demo processes images locally to ensure data privacy.
-                </p>
-                <a href="#" class="demo-btn">Launch Demo</a>
-                <p class="note-text">
-                    Note: Demo deployment in progress. The model will be available for inference soon.
-                </p>
-            </div>
-        </div>
+
+     
 
         <div class="section">
             <h2>Acknowledgments</h2>
@@ -246,12 +396,13 @@
                 This work was supported by IHub-Data, IIIT Hyderabad. Tapabrata Chakraborti acknowledges support from the Turing-Roche Strategic Partnership and the UCL NIHR Biomedical Research Centre.
             </p>
         </div>
+
     </div>
 
     <footer>
         <div class="container">
-            <p>Soon code and trained model weights will be released.</p>
-            <p class="footer-copyright">© 2025 For inquiries, please contact the authors through their respective institutions.</p>
+            <p>
+            <p class="footer-copyright">© 2025 · IEEE ISBI 2025 · For inquiries, contact the authors through their respective institutions.</p>
         </div>
     </footer>
 </body>
